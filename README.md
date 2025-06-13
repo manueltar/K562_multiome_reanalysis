@@ -72,27 +72,20 @@ $ bash ~/Scripts/Wraper_scripts/177_Recluster_and_peak_calling.sh /group/soranzo
 
 ## 15. Characterize the final object
 
-----> Jupyter notebook: Post_genotype_characterization.ipynb
-----> Jupyter notebook: Figure_5_and_S5_panels_B_C_and_D.ipynb
+----> Jupyter notebook: Post_genotype_characterization_Downstream_analysis.ipynb
+----> Jupyter notebook: Figure_5_and_S5_panels_B_C_and_D_downstream_analysis.ipynb
 
 
 ## 16. SIMBA export
 
-$ bash ~/Scripts/Wraper_scripts/180_SIMBA_export_vOLD_peaks.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/ processing_outputs_Paola_genotype
-
-
+$ bash ~/Scripts/Wraper_scripts/180_SIMBA_export_vOLD_peaks.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/ Downstream_analysis
 
 ## 17. DE analysis in Pseudobulks
 
-mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/DE_per_cluster/
+mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/DE_per_cluster/
 
-bash ~/Scripts/Wraper_scripts/178_DE_per_identity.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/ DE_per_cluster
+$ bash ~/Scripts/Wraper_scripts/178_DE_per_identity_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DE_per_cluster /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds
 
-## 18 DA analysis in Pseudobulks
-
-mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/DA_per_cluster/
-
-$ bash ~/Scripts/Wraper_scripts/179_DA_peer_identity_on_peaks_linked_to_DE_genes.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/ DA_per_cluster
 
 ##########################################################################################################################################################
 ##########################################################################################################################################################
