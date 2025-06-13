@@ -86,17 +86,16 @@ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstre
 
 $ bash ~/Scripts/Wraper_scripts/178_DE_per_identity_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DE_per_cluster /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds
 
+----> Jupyter notebook: Figure_5_panel_D_DE_part.ipynb
+
+
 ## 18. DA analysis in Pseudobulks
 
 mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/DA_per_cluster/
 
 $ bash ~/Scripts/Wraper_scripts/179_DA_peer_identity_on_peaks_linked_to_DE_genes_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DA_per_cluster /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/DE_per_cluster/DE_results_Diff_K562.rds
 
-
-
-####################		PASSED TO GITHUB LINE #################### #################### ####################
-
-
+----> Jupyter notebook: Figure_5_panel_D_DA_part.ipynb
 
 18. SIMBA find kmers
 
@@ -106,15 +105,20 @@ $ bash ~/Scripts/Wraper_scripts/168_Simba_scan_for_kmers_motifs_v3.sh /group/sor
 
 $ bash ~/Scripts/Wraper_scripts/170_Python_SIMBA_preprocessing_vK562.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ simba
 
+####################		PASSED TO GITHUB LINE #################### #################### ####################
+
+
+
+
 
 ==========================================================================> test_DA, find a way to classify peaks TSS vs non TSS
 ==========================================================================> check
 
 $ awk -F"\t" 'NR == 1 ; {if($1 == "CUX1" && $9 >= 1.3 ) print $0}' DE_per_cluster/DE_results_Diff_K562.tsv| awk -F"\t" 'NR==1;{if($8 == "1"||$8 == "3") print $0}'
 
+$ awk -F"\t" 'NR == 1 ; {if($1 ~ /Dorothea_ABC_RUNX1_targets/ && $12 >= 1.3 && $11 >=3) print $0}' ORA_results_significant_Diff_K562.tsv|awk -F"\t" 'NR==1;{if($16 == "1"||$16 == "3") print $0}'|awk -F"\t" 'NR==1;{if($15 == "Genotype_rs139141690_vs_wt") print $0}'
 
-$ awk -F"\t" 'NR == 1 ; {if($1 ~ /VOLUME/ && $12 >= 1.3 && $11 >=3) print $0}' ORA_results_significant_Diff_K562.tsv|awk -F"\t" 'NR==1;{if($16 == "1"||$16 == "3" || $16 == "2") print $0}'
+$ awk -F"\t" 'NR == 1 ; {if($1 ~ /Dorothea_ABC_RUNX1_targets/ && $12 >= 1.3 && $11 >=3) print $0}' ORA_results_significant_Diff_K562.tsv|awk -F"\t" 'NR==1;{if($16 == "1"||$16 == "3") print $0}'|awk -F"\t" 'NR==1;{if($15 == "Genotype_Del_80bp_vs_wt") print $0}'
 
-$ awk -F"\t" 'NR==1;{if($1 ~ /VOLUME/ && $11 >= 1.3 && $13 != "time") print $0}' GSEA_results_significant_Diff_K562.tsv|awk -F"\t" 'NR==1;{if($14 == "1"||$14 == "3") print $0}'
-
+$ awk -F"\t" 'NR == 1 ; {if($1 ~ /Dorothea_ABC_RUNX1_targets/ && $12 >= 1.3 && $11 >=3) print $0}' ORA_results_significant_Diff_K562.tsv|awk -F"\t" 'NR==1;{if($16 == "1"||$16 == "3") print $0}'|awk -F"\t" 'NR==1;{if($15 == "Genotype_Del_16bp_vs_wt") print $0}'
 
