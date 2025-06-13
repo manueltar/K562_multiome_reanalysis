@@ -61,42 +61,99 @@ $ bash ~/Scripts/Wraper_scripts/153_Recluster_and_export_h5ad.sh /group/soranzo/
 
 ## 13. Add genotyping information
 
-----> Jupyter notebook: Post_QC_genotype.ipynb
+----> Jupyter notebook: Post_QC_genotype.ipynb (with Paola's annotation to match the paper)
 
-## 14. Subset genotyped cells, recluster, peak calling and Simba export
+## 14. Subset, genotype and call peaks
 
-$ bash ~/Scripts/Wraper_scripts/177_Recluster_and_peak_calling.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/ processing_outputs
+$ bash ~/Scripts/Wraper_scripts/177_Recluster_and_peak_calling.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/ processing_outputs_Paola_genotype
+
+
+====================> new path: /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/
 
 ## 15. Characterize the final object
 
 ----> Jupyter notebook: Post_genotype_characterization.ipynb
 ----> Jupyter notebook: Figure_5_and_S5_panels_B_C_and_D.ipynb
 
-## 16. DE analysis in Pseudobulks
+
+## 16. SIMBA export
+
+$ bash ~/Scripts/Wraper_scripts/180_SIMBA_export_vOLD_peaks.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/ processing_outputs_Paola_genotype
+
+
+
+## 17. DE analysis in Pseudobulks
 
 mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/DE_per_cluster/
 
+bash ~/Scripts/Wraper_scripts/178_DE_per_identity.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/ DE_per_cluster
 
+## 18 DA analysis in Pseudobulks
 
+mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/DA_per_cluster/
 
+$ bash ~/Scripts/Wraper_scripts/179_DA_peer_identity_on_peaks_linked_to_DE_genes.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/ DA_per_cluster
 
 ##########################################################################################################################################################
 ##########################################################################################################################################################
 
 
-## 15. DE analysis in Pseudobulks
+-----------------------> new path /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs_Paola_genotype/ using Paola's genotyping
 
-$ bash ~/Scripts/Wraper_scripts/173_Multiome_DE_per_identity_both_Diffs.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/Downstream_analysis/ DE_per_identity
+----> Jupyter notebook: Post_QC_genotype.ipynb
 
-$ bash ~/Scripts/Wraper_scripts/174_Multiome_bespoke_heatmaps_ALL_Diffs.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/Downstream_analysis/ DE_per_identity /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/Downstream_analysis/DE_per_identity/genes_ORA_annotated_Diff_lymph.tsv
 
-## 16. DA analysis in Pseudobulks
 
-$ bash ~/Scripts/Wraper_scripts/138_MACS2_recall_peaks_by_cell_type_integrated_annotation.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/ processing_outputs
 
-## 17. SIMBA
 
-$ bash ~/Scripts/Wraper_scripts/176_Export_RNA_and_ATAC_for_SIMBA_multiome_CUX1.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/ NEW_object_output
+----> Jupyter notebook: Post_genotype_characterization.ipynb
+----> Jupyter notebook: Figure_5_and_S5_panels_B_C_and_D.ipynb
+
+
+
+
+$ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs_Paola_genotype/DE_per_cluster/
+
+$ bash ~/Scripts/Wraper_scripts/178_DE_per_identity_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs_Paola_genotype/ DE_per_cluster /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs_Paola_genotype/merged_clusters_final_annotated.rds
+
+
+
+
+----> redo the figure pannels with the paper object, export for SIMBA too, create a separate folder
+
+
+
+
+
+-----------------------> new path /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/DE_test_old_object/
+
+$ bash ~/Scripts/Wraper_scripts/178_DE_per_identity_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/ DE_test_old_object /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/Paper_seurat_object.rds
+
+
+
+$ bash ~/Scripts/Wraper_scripts/179_DA_peer_identity_on_peaks_linked_to_DE_genes_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/ DA_test_old_object /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/Paper_seurat_object.rds /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/DE_test_old_object/DE_results_Diff_K562.rds
+
+
+==========================================================================> test_DA, find a way to classify peaks TSS vs non TSS
+==========================================================================> check
+
+
+$ awk -F"\t" 'NR == 1 ; {if($1 ~ /VOLUME/ && $12 >= 1.3 && $11 >=3) print $0}' ORA_results_significant_Diff_K562.tsv|awk -F"\t" 'NR==1;{if($16 == "1"||$16 == "3" || $16 == "2") print $0}'
+
+$ awk -F"\t" 'NR==1;{if($1 ~ /VOLUME/ && $11 >= 1.3 && $13 != "time") print $0}' GSEA_results_significant_Diff_K562.tsv|awk -F"\t" 'NR==1;{if($14 == "1"||$14 == "3") print $0}'
+
+
+=================> 1st heatmap: CUX1, RUNX1, GOBP_MEGAKARYOCYTE_DIFFERENTIATION,HP_ABNORMAL_PLATELET_VOLUME,HP_INCREASED_MEAN_PLATELET_VOLUME
+
+heatmap of logFC for the comparisons with tiles highlighted
+
+
+=================> ORA at 3 counts and ABC level of curation only Dorothea_ABC_RUNX1_targets
+
+
+
+
+SIMBA
 
 $ bash ~/Scripts/Wraper_scripts/168_Simba_scan_for_kmers_motifs_v3.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/ NEW_object_output /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/NEW_object_output/Peaks.bed
 

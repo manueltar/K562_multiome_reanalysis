@@ -167,8 +167,9 @@ cluster_macs2_simba = function(option_list)
   DefaultAssay(adata_sub) <- 'ATAC'
   peaks <- CallPeaks(
     object = adata_sub,
-    group.by = "seurat_clusters",    
     macs2.path = "/group/soranzo/conda_envs/Manuel_macs2/bin/macs2")
+  
+  log_info_simple(paste0("Number of peaks called: ", length(peaks)))
   
   frag_file<-opt$frag_file
   
@@ -200,7 +201,7 @@ cluster_macs2_simba = function(option_list)
   
   
   
-  adata_sub[['ATAC_by_seurat_clusters']] <- chrom_assay
+  adata_sub[['ATAC']] <- chrom_assay
   
   #### the new factors ----
   

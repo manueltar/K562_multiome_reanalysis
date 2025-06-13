@@ -133,12 +133,12 @@ export_simba = function(option_list)
   Convert("RNA.h5Seurat", dest = "h5ad")
   
   
-  ##### Reduce the Seurat object to h5ad with ATAC_by_seurat_clusters counts not corrected by CellBender It doesn't work with CellBender corrected counts------
+  ##### Reduce the Seurat object to h5ad with ATAC counts not corrected by CellBender It doesn't work with CellBender corrected counts------
   
-  log_info_simple("SIMBA ATAC_by_seurat_clusters")
+  log_info_simple("SIMBA ATAC")
   
   
-  DefaultAssay(adata)<-'ATAC_by_seurat_clusters'
+  DefaultAssay(adata)<-'ATAC'
   
   
   
@@ -192,19 +192,19 @@ export_simba = function(option_list)
   
   #### remove motifs before writing h5ad ----
   
-  if (!is.null(adata[["ATAC_by_seurat_clusters"]]@motifs)) {
-    cat("Stripping motif information from ATAC_by_seurat_clusters assay to prevent HDF5 write errors\n")
-    adata[["ATAC_by_seurat_clusters"]]@motifs <- NULL
+  if (!is.null(adata[["ATAC"]]@motifs)) {
+    cat("Stripping motif information from ATAC assay to prevent HDF5 write errors\n")
+    adata[["ATAC"]]@motifs <- NULL
   }
   
-  ATAC_only <- DietSeurat(adata, assays = "ATAC_by_seurat_clusters", counts = TRUE, data = TRUE, scale.data = FALSE, features = NULL, dimreducs = NULL, graphs = NULL, misc = FALSE)
+  ATAC_only <- DietSeurat(adata, assays = "ATAC", counts = TRUE, data = TRUE, scale.data = FALSE, features = NULL, dimreducs = NULL, graphs = NULL, misc = FALSE)
   
   setwd(out)
   
-  unlink(c("ATAC_by_seurat_clusters.h5Seurat","ATAC_by_seurat_clusters.h5ad"))
+  unlink(c("ATAC.h5Seurat","ATAC.h5ad"))
   
-  SaveH5Seurat(ATAC_only, filename = "ATAC_by_seurat_clusters.h5Seurat")
-  Convert("ATAC_by_seurat_clusters.h5Seurat", dest = "h5ad")
+  SaveH5Seurat(ATAC_only, filename = "ATAC.h5Seurat")
+  Convert("ATAC.h5Seurat", dest = "h5ad")
   
   
   write.table(tmp.gather, file="Peaks.bed", sep="\t", row.names = F,quote = F,col.names = F)
