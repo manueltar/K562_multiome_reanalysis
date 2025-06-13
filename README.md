@@ -86,49 +86,31 @@ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstre
 
 $ bash ~/Scripts/Wraper_scripts/178_DE_per_identity_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DE_per_cluster /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds
 
+## 18. DA analysis in Pseudobulks
 
-##########################################################################################################################################################
-##########################################################################################################################################################
+mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/DA_per_cluster/
 
-
------------------------> new path /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs_Paola_genotype/ using Paola's genotyping
-
-----> Jupyter notebook: Post_QC_genotype.ipynb
+$ bash ~/Scripts/Wraper_scripts/179_DA_peer_identity_on_peaks_linked_to_DE_genes_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DA_per_cluster /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/DE_per_cluster/DE_results_Diff_K562.rds
 
 
 
-
-
-----> Jupyter notebook: Post_genotype_characterization.ipynb
-----> Jupyter notebook: Figure_5_and_S5_panels_B_C_and_D.ipynb
+####################		PASSED TO GITHUB LINE #################### #################### ####################
 
 
 
+18. SIMBA find kmers
 
-$ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs_Paola_genotype/DE_per_cluster/
+$ bash ~/Scripts/Wraper_scripts/168_Simba_scan_for_kmers_motifs_v3.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ simba /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/Peaks.bed
 
-$ bash ~/Scripts/Wraper_scripts/178_DE_per_identity_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs_Paola_genotype/ DE_per_cluster /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs_Paola_genotype/merged_clusters_final_annotated.rds
+19. SIMBA preprocessing
 
-
-
-
-----> redo the figure pannels with the paper object, export for SIMBA too, create a separate folder
-
-
-
-
-
------------------------> new path /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/DE_test_old_object/
-
-$ bash ~/Scripts/Wraper_scripts/178_DE_per_identity_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/ DE_test_old_object /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/Paper_seurat_object.rds
-
-
-
-$ bash ~/Scripts/Wraper_scripts/179_DA_peer_identity_on_peaks_linked_to_DE_genes_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/ DA_test_old_object /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/Paper_seurat_object.rds /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/processing_outputs/DE_test_old_object/DE_results_Diff_K562.rds
+$ bash ~/Scripts/Wraper_scripts/170_Python_SIMBA_preprocessing_vK562.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ simba
 
 
 ==========================================================================> test_DA, find a way to classify peaks TSS vs non TSS
 ==========================================================================> check
+
+$ awk -F"\t" 'NR == 1 ; {if($1 == "CUX1" && $9 >= 1.3 ) print $0}' DE_per_cluster/DE_results_Diff_K562.tsv| awk -F"\t" 'NR==1;{if($8 == "1"||$8 == "3") print $0}'
 
 
 $ awk -F"\t" 'NR == 1 ; {if($1 ~ /VOLUME/ && $12 >= 1.3 && $11 >=3) print $0}' ORA_results_significant_Diff_K562.tsv|awk -F"\t" 'NR==1;{if($16 == "1"||$16 == "3" || $16 == "2") print $0}'
@@ -136,18 +118,3 @@ $ awk -F"\t" 'NR == 1 ; {if($1 ~ /VOLUME/ && $12 >= 1.3 && $11 >=3) print $0}' O
 $ awk -F"\t" 'NR==1;{if($1 ~ /VOLUME/ && $11 >= 1.3 && $13 != "time") print $0}' GSEA_results_significant_Diff_K562.tsv|awk -F"\t" 'NR==1;{if($14 == "1"||$14 == "3") print $0}'
 
 
-=================> 1st heatmap: CUX1, RUNX1, GOBP_MEGAKARYOCYTE_DIFFERENTIATION,HP_ABNORMAL_PLATELET_VOLUME,HP_INCREASED_MEAN_PLATELET_VOLUME
-
-heatmap of logFC for the comparisons with tiles highlighted
-
-
-=================> ORA at 3 counts and ABC level of curation only Dorothea_ABC_RUNX1_targets
-
-
-
-
-SIMBA
-
-$ bash ~/Scripts/Wraper_scripts/168_Simba_scan_for_kmers_motifs_v3.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/ NEW_object_output /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/NEW_object_output/Peaks.bed
-
-$ bash ~/Scripts/Wraper_scripts/170_Python_SIMBA_preprocessing_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/NEW_object_output/result_SIMBA/ QC_and_embeddings
