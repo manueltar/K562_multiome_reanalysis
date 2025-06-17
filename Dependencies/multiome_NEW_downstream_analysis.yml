@@ -24,34 +24,50 @@ dependencies:
   - backports.functools_lru_cache=1.6.5=pyhd8ed1ab_0
   - beautifulsoup4=4.12.2=pyha770c72_0
   - binutils_impl_linux-64=2.40=hf600244_0
+  - bioconductor-annotate=1.80.0=r43hdfd78af_0
+  - bioconductor-annotationdbi=1.64.1=r43hdfd78af_0
+  - bioconductor-annotationfilter=1.26.0=r43hdfd78af_0
   - bioconductor-apeglm=1.24.0=r43hf17093f_1
   - bioconductor-beachmat=2.18.0=r43hf17093f_1
   - bioconductor-biobase=2.62.0=r43ha9d7317_3
+  - bioconductor-biocfilecache=2.10.1=r43hdfd78af_0
   - bioconductor-biocgenerics=0.48.1=r43hdfd78af_2
   - bioconductor-biocio=1.12.0=r43hdfd78af_0
   - bioconductor-biocneighbors=1.20.0=r43hf17093f_1
   - bioconductor-biocparallel=1.36.0=r43hf17093f_2
   - bioconductor-biocsingular=1.18.0=r43hf17093f_1
+  - bioconductor-biomart=2.58.0=r43hdfd78af_0
   - bioconductor-biostrings=2.70.1=r43ha9d7317_2
   - bioconductor-bluster=1.12.0=r43hf17093f_1
   - bioconductor-bsgenome=1.70.1=r43hdfd78af_0
   - bioconductor-bsgenome.hsapiens.ncbi.grch38=1.3.1000=r43hdfd78af_12
   - bioconductor-bsgenome.hsapiens.ucsc.hg38=1.4.5=r43hdfd78af_2
+  - bioconductor-chromvar=1.24.0=r43hf17093f_0
+  - bioconductor-cner=1.38.0=r43ha9d7317_1
   - bioconductor-data-packages=20250105.1=hdfd78af_0
   - bioconductor-delayedarray=0.28.0=r43ha9d7317_2
   - bioconductor-delayedmatrixstats=1.24.0=r43hdfd78af_0
   - bioconductor-deseq2=1.42.0=r43hf17093f_2
+  - bioconductor-dirichletmultinomial=1.44.0=r43hee7dd41_1
   - bioconductor-edger=4.0.16=r43hf17093f_1
+  - bioconductor-ensdb.hsapiens.v86=2.99.0=r43hdfd78af_12
+  - bioconductor-ensembldb=2.26.0=r43hdfd78af_0
   - bioconductor-genomeinfodb=1.38.1=r43hdfd78af_1
   - bioconductor-genomeinfodbdata=1.2.11=r43hdfd78af_1
   - bioconductor-genomicalignments=1.38.0=r43ha9d7317_1
+  - bioconductor-genomicfeatures=1.54.1=r43hdfd78af_0
   - bioconductor-genomicranges=1.54.1=r43ha9d7317_2
   - bioconductor-glmgampoi=1.14.0=r43hf17093f_0
+  - bioconductor-go.db=3.18.0=r43hdfd78af_0
   - bioconductor-hdf5array=1.30.0=r43ha9d7317_1
   - bioconductor-iranges=2.36.0=r43ha9d7317_2
+  - bioconductor-jaspar2020=0.99.10=r43hdfd78af_7
+  - bioconductor-keggrest=1.42.0=r43hdfd78af_0
   - bioconductor-limma=3.58.1=r43ha9d7317_1
   - bioconductor-matrixgenerics=1.14.0=r43hdfd78af_3
   - bioconductor-metapod=1.10.0=r43hf17093f_3
+  - bioconductor-motifmatchr=1.24.0=r43hf17093f_1
+  - bioconductor-protgenerics=1.34.0=r43hdfd78af_0
   - bioconductor-rhdf5=2.46.1=r43hf17093f_1
   - bioconductor-rhdf5filters=1.14.1=r43hf17093f_1
   - bioconductor-rhdf5lib=1.24.0=r43ha9d7317_2
@@ -65,10 +81,12 @@ dependencies:
   - bioconductor-scdblfinder=1.16.0=r43hdfd78af_0
   - bioconductor-scran=1.30.0=r43hf17093f_1
   - bioconductor-scuttle=1.12.0=r43hf17093f_1
+  - bioconductor-seqlogo=1.68.0=r43hdfd78af_0
   - bioconductor-singlecellexperiment=1.24.0=r43hdfd78af_0
   - bioconductor-sparsearray=1.2.2=r43ha9d7317_2
   - bioconductor-sparsematrixstats=1.14.0=r43hf17093f_1
   - bioconductor-summarizedexperiment=1.32.0=r43hdfd78af_0
+  - bioconductor-tfbstools=1.40.0=r43ha9d7317_1
   - bioconductor-xvector=0.42.0=r43ha9d7317_2
   - bioconductor-zlibbioc=1.48.0=r43ha9d7317_2
   - bleach=6.0.0=pyhd8ed1ab_0
@@ -304,10 +322,12 @@ dependencies:
   - r-dotcall64=1.2=r43hb67ce94_0
   - r-dplyr=1.1.4=r43h0d4f4ea_1
   - r-dqrng=0.3.2=r43h0d4f4ea_1
+  - r-dt=0.30=r43h6115d3f_0
   - r-dtplyr=1.3.1=r43h6115d3f_0
   - r-e1071=1.7_16=r43h93ab643_0
   - r-ellipsis=0.3.2=r43h76d94ec_0
   - r-emdbook=1.3.13=r43h142f84f_0
+  - r-enrichr=3.4=r43hc72bb7e_0
   - r-essentials=4.3.1=r43_0
   - r-etrunct=0.1=r43h142f84f_0
   - r-evaluate=0.22=r43h6115d3f_0
@@ -316,6 +336,7 @@ dependencies:
   - r-fastdummies=1.7.3=r43h6115d3f_0
   - r-fastmap=1.2.0=r43ha18555a_1
   - r-fastmatch=1.1_4=r43h76d94ec_0
+  - r-filelock=1.0.2=r43h76d94ec_0
   - r-fitdistrplus=1.1_11=r43h6115d3f_0
   - r-fnn=1.1.3.2=r43h884c59f_0
   - r-fontawesome=0.5.2=r43h6115d3f_0
@@ -415,6 +436,7 @@ dependencies:
   - r-modelr=0.1.11=r43h6115d3f_0
   - r-munsell=0.5.1=r43hc72bb7e_1
   - r-mvtnorm=1.2_3=r43h640688f_0
+  - r-nabor=0.5.0=r43h884c59f_0
   - r-nlme=3.1_163=r43h640688f_0
   - r-nloptr=2.0.3=r43hb5eb8f6_0
   - r-nnet=7.3_19=r43h76d94ec_0
@@ -431,11 +453,14 @@ dependencies:
   - r-pkgbuild=1.4.2=r43h142f84f_0
   - r-pkgconfig=2.0.3=r43h6115d3f_0
   - r-pkgload=1.3.3=r43h142f84f_0
+  - r-plogr=0.2.0=r43h6115d3f_0
   - r-plotly=4.10.4=r43hc72bb7e_1
   - r-plyr=1.8.9=r43h884c59f_0
   - r-png=0.1_8=r43h76d94ec_0
   - r-polyclip=1.10_6=r43h884c59f_0
   - r-polynom=1.4_1=r43h142f84f_0
+  - r-powerlaw=0.70.6=r43h142f84f_0
+  - r-pracma=2.4.2=r43h142f84f_0
   - r-praise=1.0.0=r43h6115d3f_4
   - r-presto=1.0.0=r43h503566f_2
   - r-prettyunits=1.2.0=r43h142f84f_0
@@ -452,6 +477,9 @@ dependencies:
   - r-qlcmatrix=0.9.8=r43hc72bb7e_1
   - r-quantmod=0.4.25=r43h6115d3f_0
   - r-quantreg=6.1=r43h012206f_0
+  - r-r.methodss3=1.8.2=r43h6115d3f_0
+  - r-r.oo=1.25.0=r43h6115d3f_0
+  - r-r.utils=2.12.2=r43h6115d3f_0
   - r-r6=2.5.1=r43h6115d3f_0
   - r-ragg=1.2.6=r43h884c59f_0
   - r-randomforest=4.7_1.1=r43h640688f_0
@@ -492,6 +520,7 @@ dependencies:
   - r-rpart=4.1.21=r43h76d94ec_0
   - r-rprojroot=2.0.4=r43hc72bb7e_1
   - r-rspectra=0.16_1=r43h884c59f_0
+  - r-rsqlite=2.3.1=r43h884c59f_0
   - r-rstatix=0.7.2=r43h6115d3f_0
   - r-rstudioapi=0.15.0=r43h6115d3f_0
   - r-rsvd=1.0.5=r43h142f84f_0
@@ -536,6 +565,7 @@ dependencies:
   - r-tensor=1.5=r43h142f84f_0
   - r-testthat=3.2.0=r43h884c59f_0
   - r-textshaping=1.0.1=r43h16f7c1a_0
+  - r-tfmpvalue=0.0.9=r43h884c59f_0
   - r-tibble=3.2.1=r43h76d94ec_0
   - r-tidyr=1.3.1=r43h0d4f4ea_1
   - r-tidyselect=1.2.1=r43hc72bb7e_1
@@ -559,6 +589,7 @@ dependencies:
   - r-vroom=1.6.5=r43h0d4f4ea_1
   - r-waldo=0.5.1=r43h6115d3f_0
   - r-withr=2.5.1=r43h6115d3f_0
+  - r-writexls=6.8.0=r43hc72bb7e_0
   - r-xfun=0.40=r43h76d94ec_0
   - r-xgboost=3.0.0=cpu_r43h97e353d_1
   - r-xml=3.99_0.17=r43h76d94ec_0

@@ -66,7 +66,7 @@ ORA_function = function(option_list)
   
 
   
-  out_path <- paste0(out,'/','ORA','_','background_adapted','_',Diff_sel,'/') # output path, where you want your results exported to
+  out_path <- paste0(out,'/','ORA_global','_','background_adapted','_',Diff_sel,'/') # output path, where you want your results exported to
 
   if(file.exists(out_path)){
 
@@ -537,19 +537,7 @@ ORA_function = function(option_list)
           cat(str(SIG_with_ENTREZ_sel_contrast_sel))
           cat("\n")
         }
-        
-        # Split the dataframe into a list of sub-dataframes: upregulated, downregulated genes
-        
-        deg_results_list <- split(SIG_with_ENTREZ_sel_contrast_sel, SIG_with_ENTREZ_sel_contrast_sel$diffexpressed)
-        
-        if(DEBUG ==1){
-          
-          cat("deg_results_list_0\n")
-          cat(str(deg_results_list))
-          cat("\n")
-        }
-        
-        
+       
         
         for(iteration_bg_files in 1:length(bg_files)){
           
@@ -625,18 +613,19 @@ ORA_function = function(option_list)
            #### Key function of ORA -----------------------------------------------
           
 
+          res<-enricher(gene= SIG_with_ENTREZ_sel_contrast_sel$ENTREZID, 
+                   TERM2GENE = selected_collection_df, 
+                   universe=universe,
+                   maxGSSize=maxGSSize_spec,
+                   minGSSize=minGSSize_spec,
+                   pvalueCutoff = 0.05,
+                   pAdjustMethod = "BH",
+                   qvalueCutoff = 0.25)
           
-          res<-lapply(names(deg_results_list),
-                      function(x) enricher(gene= deg_results_list[[x]]$ENTREZID, 
-                                           TERM2GENE = selected_collection_df, 
-                                           universe=universe,
-                                           maxGSSize=maxGSSize_spec,
-                                           minGSSize=minGSSize_spec,
-                                           pvalueCutoff = 0.05,
-                                           pAdjustMethod = "BH",
-                                           qvalueCutoff = 0.25))
           
-          names(res) <- names(deg_results_list)
+         
+          
+          
             
             
             if(DEBUG ==1){
@@ -646,38 +635,20 @@ ORA_function = function(option_list)
               cat("\n")
             }
           
+
           ### Filter null results ----------------------
           
-          filtered<-Filter(Negate(is.null), res)
+          FLAG_null<-sum(is.null(res))
           
           if(DEBUG ==1){
-            cat("filtered_0\n")
-            #str(filtered)
+            cat("FLAG_null_0\n")
+            str(FLAG_null)
             cat("\n")
           }
           
-          if(length(filtered) > 0){
+          if(FLAG_null == 0){
             
-            res_df <- lapply(names(filtered), 
-                             function(x) rbind(filtered[[x]]@result))
-            
-            if(DEBUG ==1){
-              
-              cat("res_df_0\n")
-              str(res_df)
-              cat("\n")
-            }
-            
-            names(res_df) <- names(filtered)
-            
-            if(DEBUG ==1){
-              
-              cat("res_df_1\n")
-              str(res_df)
-              cat("\n")
-            }
-            
-            res_df <- do.call(rbind, res_df)
+            res_df <- res@result
             
             if(DEBUG ==1){
               
@@ -686,8 +657,7 @@ ORA_function = function(option_list)
               cat("\n")
             }
             
-            res_df <- res_df %>% mutate(minuslog10padj = -log10(p.adjust),
-                                        diffexpressed = gsub('\\..+$', '', rownames(res_df)))                    
+            res_df <- res_df %>% mutate(minuslog10padj = -log10(p.adjust))                    
             
             if(DEBUG ==1){
               
@@ -747,9 +717,11 @@ ORA_function = function(option_list)
               
             }# FLAG_ZERO == 0
             
-            
-            
-          }# length(filtered) > 0     
+          }#length(FLAG_null) == 0
+          
+          
+          
+         
           
           
           
@@ -844,7 +816,7 @@ ORA_function = function(option_list)
     
     ORA_df_SIG$minuslog10padj<--log10(ORA_df_SIG$p.adjust)
     
-    cat("GSEA_df_SIG_1\n")
+    cat("ORA_df_SIG_1\n")
     str(ORA_df_SIG)
     cat("\n")
     cat(sprintf(as.character(names(summary(ORA_df_SIG$identity)))))
@@ -862,10 +834,10 @@ ORA_function = function(option_list)
     setwd(out)
     
     
-    write.table(ORA_df_SIG, file=paste("ORA_results_significant_",Diff_sel,".tsv",sep=''), sep="\t", quote=F, row.names = F)
+    write.table(ORA_df_SIG, file=paste("ORA_global_results_significant_",Diff_sel,".tsv",sep=''), sep="\t", quote=F, row.names = F)
     
 
-    saveRDS(ORA_df_SIG, file=paste("ORA_results_significant_",Diff_sel,".rds",sep=''))
+    saveRDS(ORA_df_SIG, file=paste("ORA_global_results_significant_",Diff_sel,".rds",sep=''))
     
     
     
@@ -951,7 +923,7 @@ Lolliplot_and_gene_annotation = function(option_list)
   # Maximize pvalue by ID, identity, contrast -----------------------------------
   
   
-  ORA_result.dt<-data.table(ORA_result, key=c("ID","identity","contrast","diffexpressed"))
+  ORA_result.dt<-data.table(ORA_result, key=c("ID","identity","contrast"))
   
   ORA_result_MAX<-as.data.frame(ORA_result.dt[,.SD[which.max(minuslog10padj)],by=key(ORA_result.dt)], stringsAsFactors=F)
   
@@ -993,7 +965,7 @@ Lolliplot_and_gene_annotation = function(option_list)
   
   ## Annotate genes in pathways ------------------------------------------
   
-  indx<-c(which(colnames(ORA_result_MAX)%in%c('ID','diffexpressed','identity','geneID','PATH_class')))
+  indx<-c(which(colnames(ORA_result_MAX)%in%c('ID','identity','geneID','PATH_class')))
   
   ORA_result_MAX_sub<-unique(ORA_result_MAX[,indx])
   
@@ -1010,7 +982,7 @@ Lolliplot_and_gene_annotation = function(option_list)
   str(ORA_result_MAX_sub_long)
   cat("\n")
   
-  ORA_result_MAX_sub_long.dt<-data.table(ORA_result_MAX_sub_long, key=c('gene','identity','diffexpressed','PATH_class'))
+  ORA_result_MAX_sub_long.dt<-data.table(ORA_result_MAX_sub_long, key=c('gene','identity','PATH_class'))
   
   gene_annotation<-as.data.frame(ORA_result_MAX_sub_long.dt[,.(string_ID=paste(unique(ID), collapse='|')), by=key(ORA_result_MAX_sub_long.dt)], stringsAsFactors=F)
   
@@ -1018,7 +990,7 @@ Lolliplot_and_gene_annotation = function(option_list)
   str(gene_annotation)
   cat("\n")
   
-  gene_annotation_wide<-as.data.frame(pivot_wider(gene_annotation, id_cols=c('gene','identity','diffexpressed'), names_from=PATH_class, values_from=string_ID), stringsAsFactors=F)
+  gene_annotation_wide<-as.data.frame(pivot_wider(gene_annotation, id_cols=c('gene','identity'), names_from=PATH_class, values_from=string_ID), stringsAsFactors=F)
   
   cat("gene_annotation_wide_0\n")
   str(gene_annotation_wide)
@@ -1026,7 +998,7 @@ Lolliplot_and_gene_annotation = function(option_list)
   
   setwd(out)
   
-  write.table(gene_annotation_wide, file=paste("genes_ORA_annotated_",Diff_sel,".tsv",sep=''), sep="\t", quote=F, row.names = F)
+  write.table(gene_annotation_wide, file=paste("genes_ORA_annotated_global_",Diff_sel,".tsv",sep=''), sep="\t", quote=F, row.names = F)
   
   ### Lolliplot -----------------------
   
@@ -1086,142 +1058,87 @@ Lolliplot_and_gene_annotation = function(option_list)
         cat("\n")
       }
       
-      array_diffexpressed<-unique(ORA_result_MAX_Thresholded_sel$diffexpressed)
+      ORA_result_MAX_Thresholded_sel<-ORA_result_MAX_Thresholded_sel[order(ORA_result_MAX_Thresholded_sel$PATH_class),]
       
-      if(DEBUG == 1){
-        cat("array_diffexpressed_0\n")
-        str(array_diffexpressed)
+      levels_ID<-unique(as.character(ORA_result_MAX_Thresholded_sel$ID))
+      
+      ORA_result_MAX_Thresholded_sel$DUMMY<-factor(ORA_result_MAX_Thresholded_sel$ID, levels=levels_ID, ordered=T)
+      
+      if(DEBUG ==1){
+        
+        cat("ORA_result_MAX_Thresholded_sel_1\n")
+        str(ORA_result_MAX_Thresholded_sel)
         cat("\n")
       }
       
-      if(length(array_diffexpressed) >0){
-        
-        for(iteration_diffexpressed in 1:length(array_diffexpressed)){
-          
-          direction_sel<-array_diffexpressed[iteration_diffexpressed]
-          
-          cat("------------------------------->\t")
-          cat(sprintf(as.character(direction_sel)))
-          cat("\n")
-          
-          color_selected<-NA
-          
-          if(direction_sel == 'UP'){
-            
-            color_selected<-'red'
-            
-          }else{
-            
-            if(direction_sel == 'DOWN'){
-              
-              color_selected<-'blue'
-              
-            }
-          }#direction_sel == 'UP'
-          
-          if(DEBUG ==1){
-            
-            cat("color_selected_0\n")
-            str(color_selected)
-            cat("\n")
-          }
-          
-          directionality_df<-ORA_result_MAX_Thresholded_sel[which(ORA_result_MAX_Thresholded_sel$diffexpressed == direction_sel),]
-          
-          
-          
-          
-          
-          if(dim(directionality_df)[1] >0){
-            
-            directionality_df<-directionality_df[order(directionality_df$PATH_class),]
-            
-            levels_ID<-unique(as.character(directionality_df$ID))
-            
-            directionality_df$DUMMY<-factor(directionality_df$ID, levels=levels_ID, ordered=T)
-            
-            if(DEBUG ==1){
-              
-              cat("directionality_df_0\n")
-              str(directionality_df)
-              cat("\n")
-            }
-            
-            
-            breaks_gene_sets<-as.numeric(directionality_df$DUMMY)
-            labels_gene_sets<-as.character(gsub("\\..+$","",directionality_df$DUMMY))
-            
-            
-            ORA_lolliplot<-ggplot(data=directionality_df, 
-                                  aes(y=as.numeric(DUMMY),
-                                      x=minuslog10padj)) +
-              geom_segment(data=directionality_df,
-                           aes(y=as.numeric(DUMMY),
-                               yend=as.numeric(DUMMY),
-                               x=0,
-                               xend=minuslog10padj),
-                           color=color_selected,
-                           size=0.8)+
-              geom_point(size=5, stroke=1, shape=21, color=color_selected, fill="white")+
-              geom_text(data=directionality_df,
-                        aes(x=minuslog10padj, y=as.numeric(DUMMY), label=Count),color="black",size=2, family="sans",fontface="bold")
-            
-            
-            ORA_lolliplot <-ORA_lolliplot+
-              theme_cowplot(font_size = 2,
-                            font_family = "sans")+
-              facet_grid(. ~ contrast+identity, scales='free_x', space='free_x', switch="y", drop=TRUE)+
-              theme( strip.background = element_blank(),
-                     strip.placement = "outside",
-                     strip.text = element_text(size=5,color="black", family="sans"),
-                     panel.spacing = unit(0.2, "lines"),
-                     panel.background=element_rect(fill="white"),
-                     panel.border=element_rect(colour="white",size=0,5),
-                     panel.grid.major = element_blank(),
-                     panel.grid.minor = element_blank())+
-              scale_x_continuous(name='-log10pval')+
-              scale_y_continuous(name=NULL, breaks=breaks_gene_sets,
-                                 labels=labels_gene_sets)+
-              theme_classic()+
-              theme(axis.title=element_blank(),
-                    axis.title.y=element_blank(),
-                    axis.title.x=element_text(size=8,color="black", family="sans"),
-                    axis.text.y=element_text(size=6,color="black", family="sans", face='bold'),
-                    axis.text.x=element_text(size=6,color="black", family="sans"),
-                    axis.line.x = element_line(size = 0.4),
-                    axis.ticks.x = element_line(size = 0.4),
-                    axis.ticks.y = element_line(size = 0.4),
-                    axis.line.y = element_line(size = 0.4))+
-              theme(legend.title = element_blank(),
-                    legend.text = element_text(size=6),
-                    legend.key.size = unit(0.5, 'cm'), #change legend key size
-                    legend.key.height = unit(0.5, 'cm'), #change legend key height
-                    legend.key.width = unit(0.5, 'cm'), #change legend key width
-                    legend.position="bottom")+
-              guides(fill=guide_legend(nrow=1,byrow=TRUE))
-            
-            
-            
-            
-            
-            setwd(path_identity_sel)
-            
-            svgname<-paste(paste("Lolliplot",'ORA',direction_sel, sep='_'),".svg",sep='')
-            makesvg = TRUE
-            
-            if (makesvg == TRUE)
-            {
-              ggsave(svgname, plot= ORA_lolliplot,
-                     device="svg", width=13)
-            }
-            
-            
-          }# dim(directionality_df)[1] >0
-          
-        }# iteration_diffexpressed in 1:length(array_diffexpressed)
-        
-        
-      }#length(array_diffexpressed) >0
+      
+      breaks_gene_sets<-as.numeric(ORA_result_MAX_Thresholded_sel$DUMMY)
+      labels_gene_sets<-as.character(gsub("\\..+$","",ORA_result_MAX_Thresholded_sel$DUMMY))
+      
+      
+      ORA_lolliplot<-ggplot(data=ORA_result_MAX_Thresholded_sel, 
+                            aes(y=as.numeric(DUMMY),
+                                x=minuslog10padj)) +
+        geom_segment(data=ORA_result_MAX_Thresholded_sel,
+                     aes(y=as.numeric(DUMMY),
+                         yend=as.numeric(DUMMY),
+                         x=0,
+                         xend=minuslog10padj),
+                     color='black',
+                     size=0.8)+
+        geom_point(size=5, stroke=1, shape=21, color='black', fill="white")+
+        geom_text(data=ORA_result_MAX_Thresholded_sel,
+                  aes(x=minuslog10padj, y=as.numeric(DUMMY), label=Count),color="black",size=2, family="sans",fontface="bold")
+      
+      
+      ORA_lolliplot <-ORA_lolliplot+
+        theme_cowplot(font_size = 2,
+                      font_family = "sans")+
+        facet_grid(. ~ contrast+identity, scales='free_x', space='free_x', switch="y", drop=TRUE)+
+        theme( strip.background = element_blank(),
+               strip.placement = "outside",
+               strip.text = element_text(size=5,color="black", family="sans"),
+               panel.spacing = unit(0.2, "lines"),
+               panel.background=element_rect(fill="white"),
+               panel.border=element_rect(colour="white",size=0,5),
+               panel.grid.major = element_blank(),
+               panel.grid.minor = element_blank())+
+        scale_x_continuous(name='-log10pval')+
+        scale_y_continuous(name=NULL, breaks=breaks_gene_sets,
+                           labels=labels_gene_sets)+
+        theme_classic()+
+        theme(axis.title=element_blank(),
+              axis.title.y=element_blank(),
+              axis.title.x=element_text(size=8,color="black", family="sans"),
+              axis.text.y=element_text(size=6,color="black", family="sans", face='bold'),
+              axis.text.x=element_text(size=6,color="black", family="sans"),
+              axis.line.x = element_line(size = 0.4),
+              axis.ticks.x = element_line(size = 0.4),
+              axis.ticks.y = element_line(size = 0.4),
+              axis.line.y = element_line(size = 0.4))+
+        theme(legend.title = element_blank(),
+              legend.text = element_text(size=6),
+              legend.key.size = unit(0.5, 'cm'), #change legend key size
+              legend.key.height = unit(0.5, 'cm'), #change legend key height
+              legend.key.width = unit(0.5, 'cm'), #change legend key width
+              legend.position="bottom")+
+        guides(fill=guide_legend(nrow=1,byrow=TRUE))
+      
+      
+      
+      
+      
+      setwd(path_identity_sel)
+      
+      svgname<-paste(paste("Lolliplot",'ORA','global', sep='_'),".svg",sep='')
+      makesvg = TRUE
+      
+      if (makesvg == TRUE)
+      {
+        ggsave(svgname, plot= ORA_lolliplot,
+               device="svg", width=13)
+      }
+      
       
     }#dim(ORA_result_MAX_Thresholded_sel)[1] >0
     

@@ -86,10 +86,11 @@ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstre
 
 $ bash ~/Scripts/Wraper_scripts/178_DE_per_identity_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DE_per_cluster /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds
 
+
 ----> Jupyter notebook: Figure_5_panel_D_DE_part.ipynb
 
 
-## 18. DA analysis in Pseudobulks
+## 18. DA analysis in Pseudobulks only peaks linked to DE genes
 
 mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/DA_per_cluster/
 
@@ -97,13 +98,21 @@ $ bash ~/Scripts/Wraper_scripts/179_DA_peer_identity_on_peaks_linked_to_DE_genes
 
 ----> Jupyter notebook: Figure_5_panel_D_DA_part.ipynb
 
-18. SIMBA find kmers
+19. DA analysis in Pseudobulks global
+
+mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/DA_per_cluster_global/
+
+$ bash ~/Scripts/Wraper_scripts/181_DA_peer_identity_on_peaks_global.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DA_per_cluster_global /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds
+
+20. SIMBA find kmers
 
 $ bash ~/Scripts/Wraper_scripts/168_Simba_scan_for_kmers_motifs_v3.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ simba /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/Peaks.bed
 
-19. SIMBA preprocessing
+21. SIMBA preprocessing
 
 $ bash ~/Scripts/Wraper_scripts/170_Python_SIMBA_preprocessing_vK562.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ simba
+
+----> Jupyter notebook: SIMBA_GRN_v2.ipynb
 
 ####################		PASSED TO GITHUB LINE #################### #################### ####################
 
@@ -111,14 +120,18 @@ $ bash ~/Scripts/Wraper_scripts/170_Python_SIMBA_preprocessing_vK562.sh /group/s
 
 
 
-==========================================================================> test_DA, find a way to classify peaks TSS vs non TSS
-==========================================================================> check
+2$ awk -F"\t" 'NR == 1 ; {if($1 ~ /Dorothea_ABCD_CUX1_targets/ && $12 >= 1.3 && $11 >=10) print $0}' ORA_global_results_significant_Diff_K562.tsv|awk -F"\t" 'NR == 1 ; {if($15 == "1"||$15 == "3") print $0}'
 
-$ awk -F"\t" 'NR == 1 ; {if($1 == "CUX1" && $9 >= 1.3 ) print $0}' DE_per_cluster/DE_results_Diff_K562.tsv| awk -F"\t" 'NR==1;{if($8 == "1"||$8 == "3") print $0}'
+$ awk -F"\t" 'NR == 1 ; {if($1 ~ /Dorothea_AB_RUNX1_targets/ && $12 >= 1.3 && $11 >=3) print $0}' ORA_global_results_significant_Diff_K562.tsv|awk -F"\t" 'NR == 1 ; {if($15 == "1"||$15 == "3") print $0}'
 
-$ awk -F"\t" 'NR == 1 ; {if($1 ~ /Dorothea_ABC_RUNX1_targets/ && $12 >= 1.3 && $11 >=3) print $0}' ORA_results_significant_Diff_K562.tsv|awk -F"\t" 'NR==1;{if($16 == "1"||$16 == "3") print $0}'|awk -F"\t" 'NR==1;{if($15 == "Genotype_rs139141690_vs_wt") print $0}'
 
-$ awk -F"\t" 'NR == 1 ; {if($1 ~ /Dorothea_ABC_RUNX1_targets/ && $12 >= 1.3 && $11 >=3) print $0}' ORA_results_significant_Diff_K562.tsv|awk -F"\t" 'NR==1;{if($16 == "1"||$16 == "3") print $0}'|awk -F"\t" 'NR==1;{if($15 == "Genotype_Del_80bp_vs_wt") print $0}'
 
-$ awk -F"\t" 'NR == 1 ; {if($1 ~ /Dorothea_ABC_RUNX1_targets/ && $12 >= 1.3 && $11 >=3) print $0}' ORA_results_significant_Diff_K562.tsv|awk -F"\t" 'NR==1;{if($16 == "1"||$16 == "3") print $0}'|awk -F"\t" 'NR==1;{if($15 == "Genotype_Del_16bp_vs_wt") print $0}'
+
+[DE_per_cluster]manuel.tardaguila@hnode02$ grep 'Dorothea_ABCD_CUX1_targets' ORA_global_background_adapted_Diff_K562/Dorothea_ABCD_Hs.entrez_selected_equivalence.tsv |cut -f2|awk -F"," '{print NF}'
+343
+
+
+$ grep 'CUX1_TARGET' ORA_global_background_adapted_Diff_K562/Custom_Soranzo_Hs.entrez_selected_equivalence.tsv |cut -f2|awk -F"," '{print NF}'
+582
+
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-
+ 
 set -e
 
 eval "$(conda shell.bash hook)"
@@ -151,15 +151,15 @@ do
     DE_results=$(echo "$output_dir""DE_results_""$Diff_array_sel"".rds")  
     List_GSEA=$(echo "$output_dir""GSEA_complete_results_""$Diff_array_sel"".rds")
     GSEA_result=$(echo "$output_dir""GSEA_results_significant_""$Diff_array_sel"".rds")
-    mem=$(echo "4000") # Memory per CPU in MB
+    mem=$(echo "4000") Memory per CPU in MB
     processors=$(echo "16")
     nodes=$(echo "1")
     total_memory=$(echo "scale=0; ($mem / 1) * $processors * $nodes" | bc)
 
     echo "Calculated total_memory: $total_memory"
-    # --dependency=afterany:$myjobid_DE_function
+    --dependency=afterany:$myjobid_DE_function
 
-    myjobid_MSigDB_GSEA=$(sbatch --dependency=afterany:$myjobid_DE_function --job-name=$name_MSigDB_GSEA --output=$outfile_MSigDB_GSEA --partition=cpuq --time=24:00:00 --nodes=$nodes --ntasks-per-node=$processors --mem-per-cpu=$mem --parsable --wrap="Rscript $Rscript_MSigDB_GSEA --path_to_GMT $path_to_GMT --search_terms $search_terms --pval_threshold $pval_threshold --log2FC_threshold $log2FC_threshold --Threshold_number_of_genes $Threshold_number_of_genes --TF_terms $TF_terms --DE_results $DE_results --Diff_sel $Diff_array_sel --List_GSEA $List_GSEA --GSEA_result $GSEA_result --type $type --out $output_dir --processors $processors --total_memory $total_memory")
+    myjobid_MSigDB_GSEA=$(sbatch  --dependency=afterany:$myjobid_DE_function --job-name=$name_MSigDB_GSEA --output=$outfile_MSigDB_GSEA --partition=cpuq --time=24:00:00 --nodes=$nodes --ntasks-per-node=$processors --mem-per-cpu=$mem --parsable --wrap="Rscript $Rscript_MSigDB_GSEA --path_to_GMT $path_to_GMT --search_terms $search_terms --pval_threshold $pval_threshold --log2FC_threshold $log2FC_threshold --Threshold_number_of_genes $Threshold_number_of_genes --TF_terms $TF_terms --DE_results $DE_results --Diff_sel $Diff_array_sel --List_GSEA $List_GSEA --GSEA_result $GSEA_result --type $type --out $output_dir --processors $processors --total_memory $total_memory")
     myjobid_seff_MSigDB_GSEA=$(sbatch --dependency=afterany:$myjobid_MSigDB_GSEA --open-mode=append --output=$outfile_MSigDB_ORA --job-name=$seff_name --partition=cpuq --time=24:00:00 --nodes=1 --ntasks-per-node=1 --mem-per-cpu=128M --parsable --wrap="seff $myjobid_MSigDB_GSEA >> $outfile_MSigDB_GSEA")
 
     ### MSigDB_ORA
@@ -182,7 +182,7 @@ do
     ORA_result=$(echo "$output_dir""ORA_results_significant_""$Diff_array_sel"".rds")
 
     mem=$(echo "4000") # Memory per CPU in MB
-    processors=$(echo "16")
+    processors=$(echo "4")
     nodes=$(echo "1")
     total_memory=$(echo "scale=0; ($mem / 1) * $processors * $nodes" | bc)
 
@@ -190,8 +190,39 @@ do
 
     echo "Calculated total_memory: $total_memory"
 
-    myjobid_MSigDB_ORA=$(sbatch --dependency=afterany:$myjobid_DE_function  --job-name=$name_MSigDB_ORA --output=$outfile_MSigDB_ORA --partition=cpuq --time=24:00:00 --nodes=$nodes --ntasks-per-node=$processors --mem-per-cpu=$mem --parsable --wrap="Rscript $Rscript_MSigDB_ORA --DE_results $DE_results --path_to_GMT $path_to_GMT --search_terms $search_terms --pval_threshold $pval_threshold --log2FC_threshold $log2FC_threshold --Threshold_number_of_genes $Threshold_number_of_genes --TF_terms $TF_terms --ORA_result $ORA_result --Diff_sel $Diff_array_sel --type  $type --out $output_dir --processors $processors --total_memory $total_memory")
+    myjobid_MSigDB_ORA=$(sbatch --dependency=afterany:$myjobid_DE_function --job-name=$name_MSigDB_ORA --output=$outfile_MSigDB_ORA --partition=cpuq --time=24:00:00 --nodes=$nodes --ntasks-per-node=$processors --mem-per-cpu=$mem --parsable --wrap="Rscript $Rscript_MSigDB_ORA --DE_results $DE_results --path_to_GMT $path_to_GMT --search_terms $search_terms --pval_threshold $pval_threshold --log2FC_threshold $log2FC_threshold --Threshold_number_of_genes $Threshold_number_of_genes --TF_terms $TF_terms --ORA_result $ORA_result --Diff_sel $Diff_array_sel --type  $type --out $output_dir --processors $processors --total_memory $total_memory")
     myjobid_seff_MSigDB_ORA=$(sbatch --dependency=afterany:$myjobid_MSigDB_ORA --open-mode=append --output=$outfile_MSigDB_ORA --job-name=$seff_name --partition=cpuq --time=24:00:00 --nodes=1 --ntasks-per-node=1 --mem-per-cpu=128M --parsable --wrap="seff $myjobid_MSigDB_ORA >> $outfile_MSigDB_ORA")
+
+    ### global_MSigDB_ORA
+
+    type=$(echo "global_MSigDB_ORA""_""$Diff_array_sel""_""$analysis")
+    outfile_global_MSigDB_ORA=$(echo "$Log_files""outfile_6_""$type"".out")
+    touch $outfile_global_MSigDB_ORA
+    echo -n "" > $outfile_global_MSigDB_ORA
+    name_global_MSigDB_ORA=$(echo "$type""_job")
+    seff_name=$(echo "seff""_""$type")
+
+    Rscript_global_MSigDB_ORA=$(echo "$Rscripts_path""487_ORA_on_identity_both_Diffs_global.R")
+
+
+
+    pval_threshold=$(echo "0.05")
+    log2FC_threshold=$(echo "0")
+    Threshold_number_of_genes=$(echo '3')
+    DE_results=$(echo "$output_dir""DE_results_""$Diff_array_sel"".rds")  
+    ORA_result=$(echo "$output_dir""ORA_global_results_significant_""$Diff_array_sel"".rds")
+
+    mem=$(echo "4000") # Memory per CPU in MB
+    processors=$(echo "4")
+    nodes=$(echo "1")
+    total_memory=$(echo "scale=0; ($mem / 1) * $processors * $nodes" | bc)
+
+    # --dependency=afterany:$myjobid_DE_function
+
+    echo "Calculated total_memory: $total_memory"
+
+    myjobid_global_MSigDB_ORA=$(sbatch --dependency=afterany:$myjobid_DE_function --job-name=$name_global_MSigDB_ORA --output=$outfile_global_MSigDB_ORA --partition=cpuq --time=24:00:00 --nodes=$nodes --ntasks-per-node=$processors --mem-per-cpu=$mem --parsable --wrap="Rscript $Rscript_global_MSigDB_ORA --DE_results $DE_results --path_to_GMT $path_to_GMT --search_terms $search_terms --pval_threshold $pval_threshold --log2FC_threshold $log2FC_threshold --Threshold_number_of_genes $Threshold_number_of_genes --TF_terms $TF_terms --ORA_result $ORA_result --Diff_sel $Diff_array_sel --type  $type --out $output_dir --processors $processors --total_memory $total_memory")
+    myjobid_seff_global_MSigDB_ORA=$(sbatch --dependency=afterany:$myjobid_global_MSigDB_ORA --open-mode=append --output=$outfile_global_MSigDB_ORA --job-name=$seff_name --partition=cpuq --time=24:00:00 --nodes=1 --ntasks-per-node=1 --mem-per-cpu=128M --parsable --wrap="seff $myjobid_global_MSigDB_ORA >> $outfile_global_MSigDB_ORA")
 
 
     conda deactivate

@@ -561,7 +561,7 @@ GSEA_function = function(option_list)
               
               
               minGSSize_spec<-10
-              maxGSSize_spec<-500
+              maxGSSize_spec<-1000
               
               
               if(DEBUG ==1){
