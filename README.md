@@ -104,20 +104,23 @@ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstre
 
 $ bash ~/Scripts/Wraper_scripts/181_DA_peer_identity_on_peaks_global.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DA_per_cluster_global /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds
 
-20. SIMBA find kmers
+20. chromVAR analysis
+
+mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/chromvar_analysis/
+
+----> Jupyter notebook: chromvar_analysis.ipynb
+
+21. SIMBA find kmers
 
 $ bash ~/Scripts/Wraper_scripts/168_Simba_scan_for_kmers_motifs_v3.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ simba /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/Peaks.bed
 
-21. SIMBA preprocessing
+22. SIMBA preprocessing
 
 $ bash ~/Scripts/Wraper_scripts/170_Python_SIMBA_preprocessing_vK562.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ simba
 
 ----> Jupyter notebook: SIMBA_GRN_v2.ipynb
 
 ####################		PASSED TO GITHUB LINE #################### #################### ####################
-
-
-
 
 
 2$ awk -F"\t" 'NR == 1 ; {if($1 ~ /Dorothea_ABCD_CUX1_targets/ && $12 >= 1.3 && $11 >=10) print $0}' ORA_global_results_significant_Diff_K562.tsv|awk -F"\t" 'NR == 1 ; {if($15 == "1"||$15 == "3") print $0}'
