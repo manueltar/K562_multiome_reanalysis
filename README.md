@@ -88,7 +88,7 @@ $ bash ~/Scripts/Wraper_scripts/178_DE_per_identity_v2.sh /group/soranzo/manuel.
 
 
 ----> Jupyter notebook: Figure_5_panel_D_DE_part.ipynb
-
+----> Figure_S5_CUX1_RUNX1_DE_analysis.ipynb
 
 ## 18. DA analysis in Pseudobulks only peaks linked to DE genes
 
@@ -97,6 +97,7 @@ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstre
 $ bash ~/Scripts/Wraper_scripts/179_DA_peer_identity_on_peaks_linked_to_DE_genes_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DA_per_cluster /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/DE_per_cluster/DE_results_Diff_K562.rds
 
 ----> Jupyter notebook: Figure_5_panel_D_DA_part.ipynb
+----> Jupyter notebook: Figure_S5_CUX1_RUNX1_panel_D_DA_part.ipynb
 
 19. DA analysis in Pseudobulks global
 
@@ -109,6 +110,7 @@ $ bash ~/Scripts/Wraper_scripts/181_DA_peer_identity_on_peaks_global.sh /group/s
 mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/chromvar_analysis/
 
 ----> Jupyter notebook: chromvar_analysis.ipynb
+----> Jupyter notebook: Figure_S5_CUX1_RUNX1_panel_D_chromVAR_part.ipynb
 
 21. SIMBA find kmers
 
@@ -120,7 +122,9 @@ $ bash ~/Scripts/Wraper_scripts/170_Python_SIMBA_preprocessing_vK562.sh /group/s
 
 ----> Jupyter notebook: SIMBA_GRN_v2.ipynb
 
-####################		PASSED TO GITHUB LINE #################### #################### ####################
+
+
+####################		EXPLORATION COMMANDS #################### #################### ####################
 
 
 2$ awk -F"\t" 'NR == 1 ; {if($1 ~ /Dorothea_ABCD_CUX1_targets/ && $12 >= 1.3 && $11 >=10) print $0}' ORA_global_results_significant_Diff_K562.tsv|awk -F"\t" 'NR == 1 ; {if($15 == "1"||$15 == "3") print $0}'
