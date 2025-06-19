@@ -141,4 +141,10 @@ $ awk -F"\t" 'NR == 1 ; {if($1 ~ /Dorothea_AB_RUNX1_targets/ && $12 >= 1.3 && $1
 $ grep 'CUX1_TARGET' ORA_global_background_adapted_Diff_K562/Custom_Soranzo_Hs.entrez_selected_equivalence.tsv |cut -f2|awk -F"," '{print NF}'
 582
 
+[DE_per_cluster]manuel.tardaguila@hnode02$ grep 'Dorothea_ABC_RUNX1_targets' ORA_global_background_adapted_Diff_K562/Dorothea_ABC_Hs.entrez_selected_equivalence.tsv |cut -f2|awk -F"," '{print NF}'
+280
+
+[DE_per_cluster]manuel.tardaguila@hnode02$ grep 'Dorothea_ABCD_RUNX1_targets' ORA_global_background_adapted_Diff_K562/Dorothea_ABCD_Hs.entrez_selected_equivalence.tsv |cut -f2|awk -F"," '{print NF}'
+1613
+
 
