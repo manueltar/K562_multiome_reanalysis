@@ -151,7 +151,7 @@ do
     DE_results=$(echo "$output_dir""DE_results_""$Diff_array_sel"".rds")  
     List_GSEA=$(echo "$output_dir""GSEA_complete_results_""$Diff_array_sel"".rds")
     GSEA_result=$(echo "$output_dir""GSEA_results_significant_""$Diff_array_sel"".rds")
-    mem=$(echo "4000") Memory per CPU in MB
+    mem=$(echo "4000") 
     processors=$(echo "16")
     nodes=$(echo "1")
     total_memory=$(echo "scale=0; ($mem / 1) * $processors * $nodes" | bc)
