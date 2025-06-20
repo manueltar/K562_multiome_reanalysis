@@ -112,15 +112,20 @@ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstre
 ----> Jupyter notebook: chromvar_analysis.ipynb
 ----> Jupyter notebook: Figure_S5_CUX1_RUNX1_panel_D_chromVAR_part.ipynb
 
-21. SIMBA find kmers
+21. Create custom gene sets
+
+$ bash ~/Scripts/Wraper_scripts/142_custom_genesets.sh /group/soranzo/manuel.tardaguila/gene_sets/ Michelas_genesets
+
+22. SIMBA find kmers
 
 $ bash ~/Scripts/Wraper_scripts/168_Simba_scan_for_kmers_motifs_v3.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ simba /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/Peaks.bed
 
-22. SIMBA preprocessing
+23. SIMBA preprocessing
 
 $ bash ~/Scripts/Wraper_scripts/170_Python_SIMBA_preprocessing_vK562.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ simba
 
 ----> Jupyter notebook: SIMBA_GRN_v2.ipynb
+
 
 
 
