@@ -497,6 +497,10 @@ create_gmt = function(option_list)
   cat(str(doro_collapsed))
   cat("\n")
   
+  doro_collapsed$term_string[which(doro_collapsed$term_string == 'Dorothea_ABCD_CUX1_targets')]<-'Exclusive_Dorothea_ABCD_CUX1_targets'
+  doro_collapsed$term_string[which(doro_collapsed$term_string == 'Dorothea_ABC_RUNX1_targets')]<-'Exclusive_Dorothea_ABC_RUNX1_targets'
+  
+  
   colnames(doro_collapsed)[which(colnames(doro_collapsed) == 'term_string')]<-'term'
                                         
   cat("doro_collapsed_1\n")
@@ -540,13 +544,74 @@ create_gmt = function(option_list)
   cat("\n")
   #############################################################
   
+  #### SIMBA_GRN_targets ----
+  
+  SIMBA_GRN_targets<-read.table(opt$SIMBA_GRN_targets, sep="\t", header=T)
+  
+  
+  cat("SIMBA_GRN_targets_0\n")
+  cat(str(SIMBA_GRN_targets))
+  cat("\n")
+  cat(str(unique(SIMBA_GRN_targets$Motif_Group)))
+  cat("\n")
+ 
+  
+  SIMBA_GRN_targets$ENTREZID<-mapIds(org.Hs.eg.db, keys=SIMBA_GRN_targets$Gene_Name, keytype="SYMBOL",column="ENTREZID")
+  SIMBA_GRN_targets$ensembl_gene_id<-mapIds(org.Hs.eg.db, keys=SIMBA_GRN_targets$Gene_Name, keytype="SYMBOL",column="ENSEMBL")
+  
+  cat("SIMBA_GRN_targets_1\n")
+  cat(str(SIMBA_GRN_targets))
+  cat("\n")
+  
+  SIMBA_GRN_targets_NO_NA<-SIMBA_GRN_targets[!is.na(SIMBA_GRN_targets$ENTREZID),]
+  
+  cat("SIMBA_GRN_targets_NO_NA_0\n")
+  cat(str(SIMBA_GRN_targets_NO_NA))
+  cat("\n")
+  
+  #### Prepare the file for gmt export ----
+  
+  for_gmt_SIMBA_GRN_targets_NO_NA<-unique(SIMBA_GRN_targets_NO_NA[,c(which(colnames(SIMBA_GRN_targets_NO_NA) == 'Motif_Group'),which(colnames(SIMBA_GRN_targets_NO_NA) == 'ENTREZID'))])
+  
+  colnames(for_gmt_SIMBA_GRN_targets_NO_NA)[which(colnames(for_gmt_SIMBA_GRN_targets_NO_NA) == 'Motif_Group')]<-'id'
+  colnames(for_gmt_SIMBA_GRN_targets_NO_NA)[which(colnames(for_gmt_SIMBA_GRN_targets_NO_NA) == 'ENTREZID')]<-'gene'
+  
+  cat("for_gmt_SIMBA_GRN_targets_NO_NA_0\n")
+  cat(str(for_gmt_SIMBA_GRN_targets_NO_NA))
+  cat("\n")
+  
+  
+  for_gmt_SIMBA_GRN_targets_NO_NA$name<-for_gmt_SIMBA_GRN_targets_NO_NA$id
+  
+  
+  
+  cat("for_gmt_SIMBA_GRN_targets_NO_NA_1\n")
+  cat(str(for_gmt_SIMBA_GRN_targets_NO_NA))
+  cat("\n")
+  cat(sprintf(as.character(names(summary(as.factor(for_gmt_SIMBA_GRN_targets_NO_NA$name))))))
+  cat("\n")
+  cat(sprintf(as.character(summary(as.factor(for_gmt_SIMBA_GRN_targets_NO_NA$name)))))
+  cat("\n")
+  
+  #### Reorder
+  
+  indx.reorder<-c(which(colnames(for_gmt_SIMBA_GRN_targets_NO_NA) == 'id'),which(colnames(for_gmt_SIMBA_GRN_targets_NO_NA) == 'name'),which(colnames(for_gmt_SIMBA_GRN_targets_NO_NA) == 'gene'))
+  
+  
+  for_gmt_SIMBA_GRN_targets_NO_NA_reordered<-for_gmt_SIMBA_GRN_targets_NO_NA[,indx.reorder]
+  
+  cat("for_gmt_SIMBA_GRN_targets_NO_NA_reordered_0\n")
+  cat(str(for_gmt_SIMBA_GRN_targets_NO_NA_reordered))
+  cat("\n")
+  
  #### put together everything ----
   
   DEF<-rbind(for_gmt_new_sets_long_NO_NA_reordered,
              for_gmt_Table_of_gene_sets_long_NO_NA_reordered,
              for_gmt_mir5739_targets_reordered,
              for_gmt_CUX1_TARGET_GENES_df_reordered,
-             for_gmt_doro_collapsed_reordered)
+             for_gmt_doro_collapsed_reordered,
+             for_gmt_SIMBA_GRN_targets_NO_NA_reordered)
   
   cat("DEF_0\n")
   cat(str(DEF))
@@ -597,6 +662,9 @@ main = function() {
                 metavar="type", 
                 help="Path to tab-separated input file listing regions to analyze. Required."),
     make_option(c("--Dorothea_ABCD"), type="character", default=NULL, 
+                metavar="type", 
+                help="Path to tab-separated input file listing regions to analyze. Required."),
+    make_option(c("--SIMBA_GRN_targets"), type="character", default=NULL, 
                 metavar="type", 
                 help="Path to tab-separated input file listing regions to analyze. Required."),
     make_option(c("--type"), type="character", default=NULL, 
