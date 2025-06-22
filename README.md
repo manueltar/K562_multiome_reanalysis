@@ -116,6 +116,13 @@ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstre
 
 $ bash ~/Scripts/Wraper_scripts/142_custom_genesets.sh /group/soranzo/manuel.tardaguila/gene_sets/ Michelas_genesets
 
+$ scp -r /group/soranzo/manuel.tardaguila/gene_sets/Michelas_genesets/Custom_Soranzo_Hs.entrez.gmt  /home/manuel.tardaguila/GMT_files/msigdb_v2023.1.Hs_files_to_download_locally_ENTREZ/
+
+
+$ scp -r /home/manuel.tardaguila/GMT_files/msigdb_v2023.1.Hs_files_to_download_locally_ENTREZ/* /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis//Dependencies/GMT_files/
+
+
+
 22. SIMBA find kmers
 
 $ bash ~/Scripts/Wraper_scripts/168_Simba_scan_for_kmers_motifs_v3.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ simba /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/Peaks.bed

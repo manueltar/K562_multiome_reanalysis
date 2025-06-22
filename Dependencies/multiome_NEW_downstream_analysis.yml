@@ -357,6 +357,7 @@ dependencies:
   - r-ggbeeswarm=0.7.2=r43h6115d3f_0
   - r-ggeasy=0.1.4=r43h6115d3f_0
   - r-ggforce=0.4.2=r43h0d4f4ea_1
+  - r-ggnewscale=0.4.10=r43hc72bb7e_1
   - r-ggplot2=3.4.4=r43h6115d3f_0
   - r-ggpubr=0.6.0=r43h6115d3f_0
   - r-ggrastr=1.0.2=r43h6115d3f_0
