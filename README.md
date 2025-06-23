@@ -99,20 +99,20 @@ $ bash ~/Scripts/Wraper_scripts/179_DA_peer_identity_on_peaks_linked_to_DE_genes
 ----> Jupyter notebook: Figure_5_panel_D_DA_part.ipynb
 ----> Jupyter notebook: Figure_S5_CUX1_RUNX1_panel_D_DA_part.ipynb
 
-19. DA analysis in Pseudobulks global
+## 19. DA analysis in Pseudobulks global
 
 mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/DA_per_cluster_global/
 
 $ bash ~/Scripts/Wraper_scripts/181_DA_peer_identity_on_peaks_global.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DA_per_cluster_global /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds
 
-20. chromVAR analysis
+## 20. chromVAR analysis
 
 mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/chromvar_analysis/
 
 ----> Jupyter notebook: chromvar_analysis.ipynb
 ----> Jupyter notebook: Figure_S5_CUX1_RUNX1_panel_D_chromVAR_part.ipynb
 
-21. Create custom gene sets
+## 21. Create custom gene sets
 
 $ bash ~/Scripts/Wraper_scripts/142_custom_genesets.sh /group/soranzo/manuel.tardaguila/gene_sets/ Michelas_genesets
 
@@ -123,19 +123,19 @@ $ scp -r /home/manuel.tardaguila/GMT_files/msigdb_v2023.1.Hs_files_to_download_l
 
 
 
-22. SIMBA find kmers
+## 22. SIMBA find kmers
 
 $ bash ~/Scripts/Wraper_scripts/168_Simba_scan_for_kmers_motifs_v3.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ simba /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/Peaks.bed
 
-23. SIMBA preprocessing
+## 23. SIMBA preprocessing
 
 $ bash ~/Scripts/Wraper_scripts/170_Python_SIMBA_preprocessing_vK562.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ simba
 
 ----> Jupyter notebook: SIMBA_GRN_v2.ipynb
 
 
-24. All the scripts to build the figure panels are in the Zenodo Figures/Figure_5/Script folder
-25. The intermediate files for the downstream analysis of the single cell data are in the Zenodo folder@
+## 24. All the scripts to build the figure panels are in the Zenodo Figures/Figure_5/Script folder
+## 25. The intermediate files for the downstream analysis of the single cell data are in the Zenodo folder@
 
 /group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/03_data/rs139141690_CUX1/
 
