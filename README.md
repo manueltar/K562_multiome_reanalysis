@@ -134,7 +134,10 @@ $ bash ~/Scripts/Wraper_scripts/170_Python_SIMBA_preprocessing_vK562.sh /group/s
 ----> Jupyter notebook: SIMBA_GRN_v2.ipynb
 
 
+24. All the scripts to build the figure panels are in the Zenodo Figures/Figure_5/Script folder
+25. The intermediate files for the downstream analysis of the single cell data are in the Zenodo folder@
 
+/group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/03_data/rs139141690_CUX1/
 
 ####################		EXPLORATION COMMANDS #################### #################### ####################
 
