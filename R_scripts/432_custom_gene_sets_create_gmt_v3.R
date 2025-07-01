@@ -471,8 +471,8 @@ create_gmt = function(option_list)
   
   
   CUX1_TARGET_GENES_df<-Dorothea_ABCD[which(Dorothea_ABCD$term == 'Dorothea_ABCD_CUX1_targets'),]
-  
-  
+
+
   cat("CUX1_TARGET_GENES_df_0\n")
   cat(str(CUX1_TARGET_GENES_df))
   cat("\n")
