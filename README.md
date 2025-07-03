@@ -87,8 +87,8 @@ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstre
 $ bash ~/Scripts/Wraper_scripts/178_DE_per_identity_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DE_per_cluster /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds
 
 
-----> Jupyter notebook: Figure_5_panel_D_DE_part.ipynb
-----> Figure_S5_CUX1_RUNX1_DE_analysis.ipynb
+----> Jupyter notebook: Figure_5_panel_D_DE_part_v2.ipynb
+----> Jupyter notebook: Figure_S5_CUX1_RUNX1_DE_analysis_v3_GRN.ipynb
 
 ## 18. DA analysis in Pseudobulks only peaks linked to DE genes
 
@@ -96,8 +96,8 @@ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstre
 
 $ bash ~/Scripts/Wraper_scripts/179_DA_peer_identity_on_peaks_linked_to_DE_genes_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DA_per_cluster /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/DE_per_cluster/DE_results_Diff_K562.rds
 
-----> Jupyter notebook: Figure_5_panel_D_DA_part.ipynb
-----> Jupyter notebook: Figure_S5_CUX1_RUNX1_panel_D_DA_part.ipynb
+----> Jupyter notebook: Figure_5_panel_D_DA_part_v2.ipynb
+----> Jupyter notebook: Figure_S5_CUX1_RUNX1_panel_D_DA_part_GRN.ipynb
 
 ## 19. DA analysis in Pseudobulks global
 
@@ -141,23 +141,18 @@ $ bash ~/Scripts/Wraper_scripts/182_DA_per_identity_GRN.sh /group/soranzo/manuel
 
 ----> Jupyter notebook: Figure_S5_CUX1_RUNX1_panel_D_DA_part_GRN.ipynb
 
-## 25. The scripts for the alignment, QC are in:
+## 25. The scripts for alignment, QC, clustering, DE, DA, chromVAR and SIMBA GRN analysis are in:
 
-/group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/04_data_analysis/multiome/rs139141690_K562/Pre_processing_and_QC/
-
-
-## 26. The scripts for the DE, DA, chromVAR and SIMBA GRN analysis are in:
-
-/group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/04_data_analysis/multiome/rs139141690_K562/Downstream_analysis/
+/group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/04_data_analysis/multiome/rs139141690_K562/
 
 
-## 27. All the scripts to build the figure panels and the panels are in:
+## 26. All the scripts to build the figure panels and the panels are in:
 
 
 /group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/02_Figures/Figure_5/
 /group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/02_Figures/Figure_S5/
 
-## 28. The intermediate files for the downstream analysis of the single cell data are in the Zenodo folder@
+## 27. The intermediate files for the downstream analysis of the single cell data are in the Zenodo folder@
 
 /group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/03_data/rs139141690_CUX1/
 
