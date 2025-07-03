@@ -141,12 +141,23 @@ $ bash ~/Scripts/Wraper_scripts/182_DA_per_identity_GRN.sh /group/soranzo/manuel
 
 ----> Jupyter notebook: Figure_S5_CUX1_RUNX1_panel_D_DA_part_GRN.ipynb
 
+## 25. The scripts for the alignment, QC are in:
 
-## 25. All the scripts to build the figure panels are in:
+/group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/04_data_analysis/multiome/rs139141690_K562/Pre_processing_and_QC/
 
 
+## 26. The scripts for the DE, DA, chromVAR and SIMBA GRN analysis are in:
 
-## 26. The intermediate files for the downstream analysis of the single cell data are in the Zenodo folder@
+/group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/04_data_analysis/multiome/rs139141690_K562/Downstream_analysis/
+
+
+## 27. All the scripts to build the figure panels and the panels are in:
+
+
+/group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/02_Figures/Figure_5/
+/group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/02_Figures/Figure_S5/
+
+## 28. The intermediate files for the downstream analysis of the single cell data are in the Zenodo folder@
 
 /group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/03_data/rs139141690_CUX1/
 
