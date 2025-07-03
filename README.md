@@ -133,11 +133,26 @@ $ bash ~/Scripts/Wraper_scripts/170_Python_SIMBA_preprocessing_vK562.sh /group/s
 
 ----> Jupyter notebook: SIMBA_GRN_v2.ipynb
 
+## 24. DA on peaks of CUX1 and RUNX1 GRN
 
-## 24. All the scripts to build the figure panels are in the Zenodo Figures/Figure_5/Script folder
-## 25. The intermediate files for the downstream analysis of the single cell data are in the Zenodo folder@
+$ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/DA_per_cluster_GRN/
+
+$ bash ~/Scripts/Wraper_scripts/182_DA_per_identity_GRN.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DA_per_cluster_GRN /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds
+
+----> Jupyter notebook: Figure_S5_CUX1_RUNX1_panel_D_DA_part_GRN.ipynb
+
+
+## 25. All the scripts to build the figure panels are in:
+
+
+
+## 26. The intermediate files for the downstream analysis of the single cell data are in the Zenodo folder@
 
 /group/soranzo/manuel.tardaguila/Zenodo_V2F_paper/03_data/rs139141690_CUX1/
+
+
+
+
 
 ####################		EXPLORATION COMMANDS #################### #################### ####################
 
@@ -162,4 +177,23 @@ $ grep 'CUX1_TARGET' ORA_global_background_adapted_Diff_K562/Custom_Soranzo_Hs.e
 [DE_per_cluster]manuel.tardaguila@hnode02$ grep 'Dorothea_ABCD_RUNX1_targets' ORA_global_background_adapted_Diff_K562/Dorothea_ABCD_Hs.entrez_selected_equivalence.tsv |cut -f2|awk -F"," '{print NF}'
 1613
 
+$ awk -F"\t" 'NR == 1 ; {if($1 ~ /GRN/ && $12 >= 1.3 && $11 >3) print $0}' ORA_global_results_significant_Diff_K562.tsv|awk -F"\t" 'NR == 1 ; {if($15 == "1"||$15 == "3") print $0}'|less -S
 
+
+$ awk -F"\t" 'NR == 1 ; {if($1 ~ /GRN/ && $12 >= 1.3 && $11 >3) print $0}' ORA_global_results_significant_Diff_K562.tsv|awk -F"\t" 'NR == 1 ; {if($15 == "1"||$15 == "3") print $1"\t"$14"\t"$15}'
+ID      Description     GeneRatio       BgRatio RichFactor      FoldEnrichment  zScore  pvalue  p.adjust        qvalue  Count   minuslog10padj  geneID  contrast        identity
+GRN_RUNX1       Genotype_Del_16bp_vs_wt 3
+GRN_RUNX1       Genotype_Del_80bp_vs_wt 3
+GRN_RUNX1       Genotype_rs139141690_vs_wt      3
+GRN_RUNX1       Genotype_Del_80bp_vs_wt 1
+GRN_CUX1        Genotype_rs139141690_vs_wt      1
+GRN_RUNX1       Genotype_rs139141690_vs_wt      1
+
+
+
+$ grep 'GRN_RUNX1' ORA_global_background_adapted_Diff_K562/Custom_Soranzo_Hs.entrez_selected_equivalence.tsv |cut -f2|awk -F"," '{print NF}'
+60
+
+
+$ grep 'GRN_CUX1' ORA_global_background_adapted_Diff_K562/Custom_Soranzo_Hs.entrez_selected_equivalence.tsv |cut -f2|awk -F"," '{print NF}'
+40
