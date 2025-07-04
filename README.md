@@ -88,7 +88,9 @@ $ bash ~/Scripts/Wraper_scripts/178_DE_per_identity_v2.sh /group/soranzo/manuel.
 
 
 ----> Jupyter notebook: Figure_5_panel_D_DE_part_v2.ipynb
+----> Jupyter notebook: Figure_5_panel_E.ipynb
 ----> Jupyter notebook: Figure_S5_CUX1_RUNX1_DE_analysis_v3_GRN.ipynb
+----> Jupyter notebook: Figure_5_panel_F.ipynb
 
 ## 18. DA analysis in Pseudobulks only peaks linked to DE genes
 
@@ -97,7 +99,7 @@ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstre
 $ bash ~/Scripts/Wraper_scripts/179_DA_peer_identity_on_peaks_linked_to_DE_genes_v2.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DA_per_cluster /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/DE_per_cluster/DE_results_Diff_K562.rds
 
 ----> Jupyter notebook: Figure_5_panel_D_DA_part_v2.ipynb
-----> Jupyter notebook: Figure_S5_CUX1_RUNX1_panel_D_DA_part_GRN.ipynb
+----> Jupyter notebook: Figure_S5_CUX1_RUNX1_GRN_DEF.ipynb
 
 ## 19. DA analysis in Pseudobulks global
 
@@ -139,7 +141,7 @@ $ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downst
 
 $ bash ~/Scripts/Wraper_scripts/182_DA_per_identity_GRN.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DA_per_cluster_GRN /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds
 
-----> Jupyter notebook: Figure_S5_CUX1_RUNX1_panel_D_DA_part_GRN.ipynb
+
 
 ## 25. The scripts for alignment, QC, clustering, DE, DA, chromVAR and SIMBA GRN analysis are in:
 
