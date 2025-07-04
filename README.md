@@ -142,6 +142,7 @@ $ mkdir -p /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downst
 $ bash ~/Scripts/Wraper_scripts/182_DA_per_identity_GRN.sh /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/ DA_per_cluster_GRN /group/soranzo/manuel.tardaguila/2025_K562_multiome_reanalysis/Downstream_analysis/merged_clusters_final_annotated.rds
 
 
+----> Jupyter notebook:Figure_S5_CUX1_RUNX1_GRN_EXPERIMENT.ipynb
 
 ## 25. The scripts for alignment, QC, clustering, DE, DA, chromVAR and SIMBA GRN analysis are in:
 
